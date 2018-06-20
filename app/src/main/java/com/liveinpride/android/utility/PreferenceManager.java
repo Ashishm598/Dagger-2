@@ -1,4 +1,4 @@
-package com.liveinpride.android.util;
+package com.liveinpride.android.utility;
 
 import android.content.Context;
 import android.content.SharedPreferences;

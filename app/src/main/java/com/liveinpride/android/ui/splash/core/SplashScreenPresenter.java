@@ -41,4 +41,8 @@ public class SplashScreenPresenter implements Presenter {
     public void onDestroy() {
 
     }
+
+    public void gotoIntroSliderScreen() {
+        view.navigateToIntroSliderScreen();
+    }
 }

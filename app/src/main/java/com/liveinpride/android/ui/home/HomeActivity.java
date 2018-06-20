@@ -1,20 +1,21 @@
 package com.liveinpride.android.ui.home;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.liveinpride.android.R;
+import com.liveinpride.android.ui.home.core.HomeModel;
 import com.liveinpride.android.ui.home.core.HomePresenter;
 import com.liveinpride.android.ui.home.core.HomeView;
-import com.liveinpride.android.util.CheckInternet;
-import com.liveinpride.android.util.MyCustomWebViewClient;
+import com.liveinpride.android.utility.MyCustomWebViewClient;
+import com.liveinpride.android.utility.Utils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +25,9 @@ import butterknife.Unbinder;
 public class HomeActivity extends AppCompatActivity implements HomeView {
 
 
-    HomePresenter presenter;
+    // Use Dagger
+    private HomePresenter presenter;
+    private Utils utils;
 
     @BindView(R.id.webView)
     WebView webView;
@@ -40,22 +43,18 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         super.setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
 
-        presenter = new HomePresenter(this);
+        // Use Dagger
+        utils = new Utils(this);
+        presenter = new HomePresenter(this, utils);
 
-        webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setAppCacheEnabled(true);
+        // WebView Settings Setup
+        setUpWebViewSettings();
 
+        // Set WebView Client
+        setWebViewClient();
 
-        if (CheckInternet.isConnectingToInternet(this)) {
-            webView.loadUrl(presenter.loadWebView());
-            webViewClient = new MyCustomWebViewClient(this);
-            webView.setWebViewClient(webViewClient);
-            webView.setScrollBarStyle(View.SCROLLBARS_OUTSIDE_OVERLAY);
-        } else {
-            Toast.makeText(getApplicationContext(), "No Internet! Please connect to Internet", Toast.LENGTH_SHORT).show();
-        }
+        // Load WebView
+        presenter.loadWebView();
 
     }
 
@@ -89,6 +88,31 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
 
     @Override
     public void initView() {
+    }
+
+    @SuppressLint("SetJavaScriptEnabled")
+    @Override
+    public void setUpWebViewSettings() {
+        webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setAppCacheEnabled(true);
+    }
+
+    @Override
+    public void loadWebView(String url) {
+        webView.loadUrl(url);
+    }
+
+    @Override
+    public void showToastNetworkNotAvailable() {
+        Toast.makeText(getApplicationContext(), "No Internet! Please connect to Internet", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void setWebViewClient() {
+        webViewClient = new MyCustomWebViewClient(this, utils);
+        webView.setWebViewClient(webViewClient);
     }
 
     @Override

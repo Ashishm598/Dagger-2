@@ -18,7 +18,7 @@ import com.liveinpride.android.R;
 import com.liveinpride.android.ui.home.HomeActivity;
 import com.liveinpride.android.ui.introslider.core.IntroSliderPresenter;
 import com.liveinpride.android.ui.introslider.core.IntroSliderView;
-import com.liveinpride.android.util.PreferenceManager;
+import com.liveinpride.android.utility.PreferenceManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +33,9 @@ import butterknife.Unbinder;
 public class IntroSliderActivity extends AppCompatActivity implements IntroSliderView {
 
 
+    // Use Dagger
     IntroSliderPresenter presenter;
+    private PreferenceManager preferenceManager;
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
@@ -55,19 +57,19 @@ public class IntroSliderActivity extends AppCompatActivity implements IntroSlide
     private IntroViewPagerAdapter introViewPagerAdapter;
     private TextView[] dots;
     private int[] layouts;
-    private PreferenceManager preferenceManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Use Dagger
         preferenceManager = new PreferenceManager(this);
         presenter = new IntroSliderPresenter(this, preferenceManager);
 
-        // Checking for first time launch - before calling setContentView()
-        if (!presenter.isFirstTimeLaunched()) {
-            gotoHomeActivity();
-        }
+        // Checking for first time launch - before calling setContentView() ?if yes goto HomeScreen.
+        presenter.launchHomeActivityIfNotFirstTime();
+
 
         // Making notification bar transparent
         changeStatusBarColor();
@@ -199,10 +201,6 @@ public class IntroSliderActivity extends AppCompatActivity implements IntroSlide
 
     }
 
-    @Override
-    public void gotoHomeActivity() {
-        presenter.launchHomeActivity();
-    }
 
     @Override
     public void navigateToHomeScreen() {
@@ -240,12 +238,12 @@ public class IntroSliderActivity extends AppCompatActivity implements IntroSlide
             // move to next screen
             viewPager.setCurrentItem(current);
         } else {
-            gotoHomeActivity();
+            presenter.nextBtnClicked();
         }
     }
 
     @OnClick(R.id.btn_skip)
     public void onBtnSkipClicked() {
-        gotoHomeActivity();
+        presenter.skipBtnClicked();
     }
 }

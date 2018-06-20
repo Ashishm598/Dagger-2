@@ -19,7 +19,7 @@ import java.util.TimerTask;
 
 public class SplashScreenActivity extends AppCompatActivity implements SplashScreenView {
 
-
+    // Use Dagger
     SplashScreenPresenter presenter;
 
     long Delay = 3000;
@@ -30,6 +30,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Use Dagger
         presenter = new SplashScreenPresenter(this);
 
         // Making notification bar transparent
@@ -43,7 +44,7 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
         TimerTask ShowSplash = new TimerTask() {
             @Override
             public void run() {
-                gotoIntroSliderScreen();
+                presenter.gotoIntroSliderScreen();
             }
         };
 
@@ -81,13 +82,6 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
 
     }
 
-    @Override
-    public void gotoIntroSliderScreen() {
-        myIntent = new Intent(SplashScreenActivity.this, IntroSliderActivity.class);
-        startActivity(myIntent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-        SplashScreenActivity.this.finish();
-    }
 
     @Override
     public void changeStatusBarColor() {
@@ -103,5 +97,13 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    @Override
+    public void navigateToIntroSliderScreen() {
+        myIntent = new Intent(SplashScreenActivity.this, IntroSliderActivity.class);
+        startActivity(myIntent);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+        SplashScreenActivity.this.finish();
     }
 }

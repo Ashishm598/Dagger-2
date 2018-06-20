@@ -1,7 +1,7 @@
 package com.liveinpride.android.ui.introslider.core;
 
 import com.liveinpride.android.ui.Presenter;
-import com.liveinpride.android.util.PreferenceManager;
+import com.liveinpride.android.utility.PreferenceManager;
 
 public class IntroSliderPresenter implements Presenter {
 
@@ -44,16 +44,24 @@ public class IntroSliderPresenter implements Presenter {
 
     }
 
-    public boolean isFirstTimeLaunched() {
-        return model.isFirstTimeLaunch();
-    }
-
-    public void launchHomeActivity() {
-        model.setFirstTimeLaunch(false);
-        view.navigateToHomeScreen();
+    public void launchHomeActivityIfNotFirstTime() {
+        if (!model.isFirstTimeLaunch()) {
+            model.setFirstTimeLaunch(false);
+            view.navigateToHomeScreen();
+        }
     }
 
     public int[] getIntroSliderLayouts() {
         return model.getIntroSliderLayouts();
+    }
+
+    public void nextBtnClicked() {
+        model.setFirstTimeLaunch(false);
+        view.navigateToHomeScreen();
+    }
+
+    public void skipBtnClicked() {
+        model.setFirstTimeLaunch(false);
+        view.navigateToHomeScreen();
     }
 }

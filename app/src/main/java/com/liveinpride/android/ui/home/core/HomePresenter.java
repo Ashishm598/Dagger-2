@@ -1,18 +1,21 @@
 package com.liveinpride.android.ui.home.core;
 
 import com.liveinpride.android.ui.Presenter;
+import com.liveinpride.android.utility.Utils;
 
 public class HomePresenter implements Presenter {
 
     private HomeView view;
     private HomeModel model;
+    private Utils utils;
 
-    public HomePresenter(HomeView view) {
+    public HomePresenter(HomeView view, Utils utils) {
         this.view = view;
+        this.utils = utils;
         this.model = new HomeModel();
     }
 
-    public String loadWebView() {
+    private String getURL() {
         return model.getWebURL();
     }
 
@@ -44,5 +47,18 @@ public class HomePresenter implements Presenter {
     @Override
     public void onDestroy() {
 
+    }
+
+    private boolean isNetworkAvailable() {
+        return utils.isConnectingToInternet();
+    }
+
+
+    public void loadWebView() {
+        if (isNetworkAvailable()) {
+            view.loadWebView(getURL());
+        } else {
+            view.showToastNetworkNotAvailable();
+        }
     }
 }

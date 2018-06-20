@@ -1,4 +1,4 @@
-package com.liveinpride.android.util;
+package com.liveinpride.android.utility;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,11 +11,11 @@ import android.widget.Toast;
 public class MyCustomWebViewClient extends WebViewClient {
 
     private Context mContext;
-    private ProgressBarUtil progressBarUtil;
+    private Utils utils;
 
-    public MyCustomWebViewClient(Context context) {
+    public MyCustomWebViewClient(Context context, Utils utils) {
         this.mContext = context;
-        this.progressBarUtil = new ProgressBarUtil(context);
+        this.utils = utils;
     }
 
     @Override
@@ -32,12 +32,12 @@ public class MyCustomWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        progressBarUtil.showProgressDialog();
+        utils.showProgressDialog();
     }
 
     @Override
     public void onPageFinished(WebView view, String url) {
-        progressBarUtil.hideProgressDialog();
+        utils.hideProgressDialog();
     }
 
 

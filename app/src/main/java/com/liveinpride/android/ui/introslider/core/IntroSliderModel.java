@@ -1,7 +1,7 @@
 package com.liveinpride.android.ui.introslider.core;
 
 import com.liveinpride.android.R;
-import com.liveinpride.android.util.PreferenceManager;
+import com.liveinpride.android.utility.PreferenceManager;
 
 public class IntroSliderModel {
 
