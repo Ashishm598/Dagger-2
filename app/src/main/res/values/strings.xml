@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">LIVE IN PRIDE</string>
+
+
+    <!--    Intro sliders content  -->
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="sample_desc_intro_slide1">Choose Your Product From The List Of LIP.</string>
+
+    <string name="sample_desc_intro_slide2">Select One Time Buy Or Subscription Model As Per Your Preference.</string>
+
+    <string name="sample_desc_intro_slide3"><b>Subscription Model:</b> Receive One LIP Box With 7 Pieces In Every 4 Months. \n\n
+<b>One Time Buy:</b> Receive Your LIP Box With 7 Pieces To Your Doorstep.
+</string>
+    <!---->
+
+</resources>
