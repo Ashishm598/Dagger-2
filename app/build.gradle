@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
+
 android {
     signingConfigs {
         config {
@@ -15,8 +16,8 @@ android {
         applicationId "com.liveinpride.android"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.0.1"
         manifestPlaceholders = [onesignal_app_id               : 'd7b5275a-1330-4380-9b17-79d1d5d3d0a0',
                                 // Project number pulled from dashboard, local value is ignored.
                                 onesignal_google_project_number: '61075247749']
@@ -34,6 +35,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
     /*-------------- Support Libraries---------------*/
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
@@ -53,6 +55,7 @@ dependencies {
     /*------------------------- GIF ------------------------*/
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
     /*----------------------------------------------------------*/
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
