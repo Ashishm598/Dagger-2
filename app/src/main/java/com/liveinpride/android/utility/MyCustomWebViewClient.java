@@ -32,7 +32,7 @@ public class MyCustomWebViewClient extends WebViewClient {
     @Override
     public void onPageStarted(WebView view, String url, Bitmap favicon) {
         super.onPageStarted(view, url, favicon);
-        utils.showProgressDialog();
+        utils.showProgressDialog(mContext);
     }
 
     @Override

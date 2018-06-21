@@ -1,16 +1,15 @@
 package com.liveinpride.android.ui.introslider.core;
 
 import com.liveinpride.android.ui.Presenter;
-import com.liveinpride.android.utility.PreferenceManager;
 
 public class IntroSliderPresenter implements Presenter {
 
     private IntroSliderView view;
     private IntroSliderModel model;
 
-    public IntroSliderPresenter(IntroSliderView view, PreferenceManager preferenceManager) {
+    public IntroSliderPresenter(IntroSliderView view, IntroSliderModel model) {
         this.view = view;
-        this.model = new IntroSliderModel(this, preferenceManager);
+        this.model = model;
     }
 
 

@@ -8,21 +8,15 @@ import android.view.Window;
 
 public class Utils {
 
-    private Context mContext;
     private ProgressDialog progressDialog;
 
 
-    public Utils(Context context) {
-        this.mContext = context;
-    }
-
     // shows ProgressBar
-    public void showProgressDialog() {
-        progressDialog = new ProgressDialog(mContext);
+    public void showProgressDialog(Context context) {
+        progressDialog = new ProgressDialog(context);
         progressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         progressDialog.setMessage("Please wait...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setCancelable(false);
         progressDialog.show();
     }
 
@@ -33,8 +27,8 @@ public class Utils {
 
 
     // Network Status
-    public boolean isConnectingToInternet() {
-        ConnectivityManager connectivity = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public boolean isConnectingToInternet(Context context) {
+        ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null) {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();
             if (info != null)

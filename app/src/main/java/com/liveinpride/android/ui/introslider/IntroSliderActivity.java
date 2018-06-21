@@ -18,7 +18,10 @@ import com.liveinpride.android.R;
 import com.liveinpride.android.ui.home.HomeActivity;
 import com.liveinpride.android.ui.introslider.core.IntroSliderPresenter;
 import com.liveinpride.android.ui.introslider.core.IntroSliderView;
-import com.liveinpride.android.utility.PreferenceManager;
+import com.liveinpride.android.ui.introslider.dagger.DaggerIntroSliderComponent;
+import com.liveinpride.android.ui.introslider.dagger.IntroSliderModule;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,9 +36,8 @@ import butterknife.Unbinder;
 public class IntroSliderActivity extends AppCompatActivity implements IntroSliderView {
 
 
-    // Use Dagger
+    @Inject
     IntroSliderPresenter presenter;
-    private PreferenceManager preferenceManager;
 
     @BindView(R.id.view_pager)
     ViewPager viewPager;
@@ -63,9 +65,13 @@ public class IntroSliderActivity extends AppCompatActivity implements IntroSlide
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Use Dagger
-        preferenceManager = new PreferenceManager(this);
-        presenter = new IntroSliderPresenter(this, preferenceManager);
+        DaggerIntroSliderComponent.builder()
+                .introSliderModule(new IntroSliderModule(this))
+                .build()
+                .inject(this);
+
+
+
 
         // Checking for first time launch - before calling setContentView() ?if yes goto HomeScreen.
         presenter.launchHomeActivityIfNotFirstTime();

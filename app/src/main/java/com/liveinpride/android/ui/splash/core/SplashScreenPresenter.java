@@ -4,12 +4,12 @@ import com.liveinpride.android.ui.Presenter;
 
 public class SplashScreenPresenter implements Presenter {
 
-    private SplashScreenView view;
-    private SplashScreenModel model;
+    SplashScreenView view;
+    SplashScreenModel model;
 
-    public SplashScreenPresenter(SplashScreenView view) {
+    public SplashScreenPresenter(SplashScreenView view, SplashScreenModel model) {
         this.view = view;
-        this.model = new SplashScreenModel(this);
+        this.model = model;
     }
 
     @Override

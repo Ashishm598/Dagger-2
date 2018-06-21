@@ -11,11 +11,15 @@ import android.webkit.WebView;
 import android.widget.Toast;
 
 import com.liveinpride.android.R;
-import com.liveinpride.android.ui.home.core.HomeModel;
+import com.liveinpride.android.app.App;
 import com.liveinpride.android.ui.home.core.HomePresenter;
 import com.liveinpride.android.ui.home.core.HomeView;
+import com.liveinpride.android.ui.home.dagger.DaggerHomeComponent;
+import com.liveinpride.android.ui.home.dagger.HomeModule;
 import com.liveinpride.android.utility.MyCustomWebViewClient;
 import com.liveinpride.android.utility.Utils;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,9 +29,14 @@ import butterknife.Unbinder;
 public class HomeActivity extends AppCompatActivity implements HomeView {
 
 
-    // Use Dagger
-    private HomePresenter presenter;
-    private Utils utils;
+    @Inject
+    HomePresenter presenter;
+
+    @Inject
+    MyCustomWebViewClient webViewClient;
+
+    @Inject
+    Utils utils;
 
     @BindView(R.id.webView)
     WebView webView;
@@ -35,7 +44,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     Unbinder unbinder;
 
     WebSettings webSettings;
-    MyCustomWebViewClient webViewClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +51,10 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         super.setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
 
-        // Use Dagger
-        utils = new Utils(this);
-        presenter = new HomePresenter(this, utils);
+        DaggerHomeComponent.builder()
+                .appComponent(App.getAppComponent())
+                .homeModule(new HomeModule(this))
+                .build().inject(this);
 
         // WebView Settings Setup
         setUpWebViewSettings();
@@ -53,8 +62,14 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         // Set WebView Client
         setWebViewClient();
 
-        // Load WebView
-        presenter.loadWebView();
+
+        if (utils.isConnectingToInternet(this)) {
+            // Load WebView
+            presenter.loadWebView();
+        } else {
+            showToastNetworkNotAvailable();
+        }
+
 
     }
 
@@ -111,7 +126,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
 
     @Override
     public void setWebViewClient() {
-        webViewClient = new MyCustomWebViewClient(this, utils);
         webView.setWebViewClient(webViewClient);
     }
 

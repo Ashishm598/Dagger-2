@@ -6,7 +6,6 @@ import com.liveinpride.android.utility.PreferenceManager;
 public class IntroSliderModel {
 
     private PreferenceManager preferenceManager;
-    private IntroSliderPresenter presenter;
 
     private int[] introSliderScreens = new int[]{
             R.layout.slide_screen1,
@@ -15,8 +14,7 @@ public class IntroSliderModel {
     };
 
 
-    IntroSliderModel(IntroSliderPresenter presenter, PreferenceManager preferenceManager) {
-        this.presenter = presenter;
+    public IntroSliderModel(PreferenceManager preferenceManager) {
         this.preferenceManager = preferenceManager;
     }
 

@@ -13,13 +13,17 @@ import com.liveinpride.android.R;
 import com.liveinpride.android.ui.introslider.IntroSliderActivity;
 import com.liveinpride.android.ui.splash.core.SplashScreenPresenter;
 import com.liveinpride.android.ui.splash.core.SplashScreenView;
+import com.liveinpride.android.ui.splash.dagger.DaggerSplashScreenComponent;
+import com.liveinpride.android.ui.splash.dagger.SplashScreenModule;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.inject.Inject;
+
 public class SplashScreenActivity extends AppCompatActivity implements SplashScreenView {
 
-    // Use Dagger
+    @Inject
     SplashScreenPresenter presenter;
 
     long Delay = 3000;
@@ -30,8 +34,11 @@ public class SplashScreenActivity extends AppCompatActivity implements SplashScr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Use Dagger
-        presenter = new SplashScreenPresenter(this);
+        DaggerSplashScreenComponent.builder()
+                .splashScreenModule(new SplashScreenModule(this))
+                .build()
+                .inject(this);
+
 
         // Making notification bar transparent
         changeStatusBarColor();
