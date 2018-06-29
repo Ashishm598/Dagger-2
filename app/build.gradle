@@ -16,8 +16,8 @@ android {
         applicationId "com.liveinpride.android"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.3"
         manifestPlaceholders = [onesignal_app_id               : 'd7b5275a-1330-4380-9b17-79d1d5d3d0a0',
                                 // Project number pulled from dashboard, local value is ignored.
                                 onesignal_google_project_number: '61075247749']
@@ -41,17 +41,21 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     implementation 'com.android.support:support-v4:27.1.1'
     /*---------------------------------------------*/
+
     /*----------------- Dagger - 2 ----------------*/
     implementation 'com.google.dagger:dagger:2.11'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
     /*---------------------------------------------*/
+
     /*----------------- ButterKnife ----------------*/
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     /*---------------------------------------------*/
+
     /*---------------------- One Signal ---------------------*/
     implementation 'com.onesignal:OneSignal:3.9.1'
     /*-------------------------------------------------------*/
+
     /*------------------------- GIF ------------------------*/
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
     /*----------------------------------------------------------*/

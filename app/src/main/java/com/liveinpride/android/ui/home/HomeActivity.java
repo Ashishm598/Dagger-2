@@ -3,11 +3,15 @@ package com.liveinpride.android.ui.home;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.liveinpride.android.R;
@@ -23,6 +27,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
@@ -41,6 +46,16 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     @BindView(R.id.webView)
     WebView webView;
 
+    @BindView(R.id.btn_try_again)
+    Button btnTryAgain;
+
+    @BindView(R.id.no_network_layout)
+    FrameLayout fl_no_network_layout;
+
+    @BindView(R.id.swipeToRefresh)
+    SwipeRefreshLayout swipeToRefresh;
+
+
     Unbinder unbinder;
 
     WebSettings webSettings;
@@ -50,6 +65,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         super.onCreate(savedInstanceState);
         super.setContentView(R.layout.activity_main);
         unbinder = ButterKnife.bind(this);
+        initView();
 
         DaggerHomeComponent.builder()
                 .appComponent(App.getAppComponent())
@@ -63,12 +79,11 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         setWebViewClient();
 
 
-        if (utils.isConnectingToInternet(this)) {
-            // Load WebView
-            presenter.loadWebView();
-        } else {
-            showToastNetworkNotAvailable();
-        }
+        //Load WebView
+        presenter.loadWebView();
+
+
+        swipeToRefresh.setOnRefreshListener(mOnRefreshListener);
 
 
     }
@@ -76,6 +91,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
+
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (keyCode) {
                 case KeyEvent.KEYCODE_BACK:
@@ -103,6 +119,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
 
     @Override
     public void initView() {
+
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -116,17 +133,44 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
 
     @Override
     public void loadWebView(String url) {
-        webView.loadUrl(url);
+        if (utils.isConnectedToInternet(this)) {
+            // Load WebView
+            webView.loadUrl(url);
+            displayWebViewLayout();
+        } else {
+            displayNoNetworkLayout();
+        }
     }
 
-    @Override
-    public void showToastNetworkNotAvailable() {
-        Toast.makeText(getApplicationContext(), "No Internet! Please connect to Internet", Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void setWebViewClient() {
         webView.setWebViewClient(webViewClient);
+    }
+
+    @Override
+    public void displayNoNetworkLayout() {
+        fl_no_network_layout.setVisibility(View.VISIBLE);
+        webView.setVisibility(View.GONE);
+        Toast.makeText(this, "Please check your internet connection & Try again.", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void displayWebViewLayout() {
+        fl_no_network_layout.setVisibility(View.GONE);
+        webView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showSwipeToRefreshLayout() {
+
+    }
+
+    @Override
+    public void hideSwipeToRefreshLayout() {
+        if (swipeToRefresh.isRefreshing()) {
+            swipeToRefresh.setRefreshing(false);
+        }
     }
 
     @Override
@@ -157,4 +201,19 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         unbinder.unbind();
         presenter.onDestroy();
     }
+
+    @OnClick(R.id.btn_try_again)
+    public void onViewClicked() {
+        presenter.loadWebView();
+    }
+
+
+    SwipeRefreshLayout.OnRefreshListener mOnRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            webView.reload();
+        }
+    };
+
+
 }

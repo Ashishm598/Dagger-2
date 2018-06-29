@@ -5,6 +5,9 @@ public interface HomeView {
     void initView();
     void setUpWebViewSettings();
     void loadWebView(String url);
-    void showToastNetworkNotAvailable();
     void setWebViewClient();
+    void displayNoNetworkLayout();
+    void displayWebViewLayout();
+    void showSwipeToRefreshLayout();
+    void hideSwipeToRefreshLayout();
 }

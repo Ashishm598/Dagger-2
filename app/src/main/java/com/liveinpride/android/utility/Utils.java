@@ -27,7 +27,7 @@ public class Utils {
 
 
     // Network Status
-    public boolean isConnectingToInternet(Context context) {
+    public boolean isConnectedToInternet(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null) {
             NetworkInfo[] info = connectivity.getAllNetworkInfo();

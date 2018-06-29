@@ -7,6 +7,8 @@ import android.net.Uri;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.liveinpride.android.ui.home.HomeActivity;
+
 public class MyCustomWebViewClient extends WebViewClient {
 
     private final String target_url_prefix = "liveinpride.app";
@@ -26,7 +28,11 @@ public class MyCustomWebViewClient extends WebViewClient {
         if (url.startsWith("http:") || url.startsWith("https:")) {
 
             if (host.equals(target_url_prefix)) {
-                view.loadUrl(url);
+                if (utils.isConnectedToInternet(mContext)) {
+                    view.loadUrl(url);
+                } else {
+                    ((HomeActivity) mContext).displayNoNetworkLayout();
+                }
                 return false;
             }
 
@@ -34,6 +40,7 @@ public class MyCustomWebViewClient extends WebViewClient {
             Intent tel = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
             mContext.startActivity(tel);
             return true;
+
         } else if (url.startsWith("mailto:")) {
             Intent mail = new Intent(Intent.ACTION_SEND);
             mail.setType("application/octet-stream");
@@ -61,6 +68,7 @@ public class MyCustomWebViewClient extends WebViewClient {
     @Override
     public void onPageFinished(WebView view, String url) {
         utils.hideProgressDialog();
+       ((HomeActivity) mContext).hideSwipeToRefreshLayout();
     }
 
 
