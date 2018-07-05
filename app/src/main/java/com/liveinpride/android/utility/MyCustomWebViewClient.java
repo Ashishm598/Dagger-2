@@ -14,6 +14,7 @@ public class MyCustomWebViewClient extends WebViewClient {
     private final String target_url_prefix = "liveinpride.app";
     private Context mContext;
     private Utils utils;
+    private Intent mIntent;
 
     public MyCustomWebViewClient(Context context, Utils utils) {
         this.mContext = context;
@@ -37,23 +38,23 @@ public class MyCustomWebViewClient extends WebViewClient {
             }
 
         } else if (url.startsWith("tel:")) {
-            Intent tel = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
-            mContext.startActivity(tel);
+            mIntent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
+            mContext.startActivity(mIntent);
             return true;
 
         } else if (url.startsWith("mailto:")) {
-            Intent mail = new Intent(Intent.ACTION_SEND);
-            mail.setType("application/octet-stream");
+            mIntent= new Intent(Intent.ACTION_SEND);
+            mIntent.setType("application/octet-stream");
             String AdressMail = url.replace("mailto:", "");
-            mail.putExtra(Intent.EXTRA_EMAIL, new String[]{AdressMail});
-            mail.putExtra(Intent.EXTRA_SUBJECT, "");
-            mail.putExtra(Intent.EXTRA_TEXT, "");
-            mContext.startActivity(mail);
+            mIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{AdressMail});
+            mIntent.putExtra(Intent.EXTRA_SUBJECT, "");
+            mIntent.putExtra(Intent.EXTRA_TEXT, "");
+            mContext.startActivity(mIntent);
             return true;
         }
 
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        mContext.startActivity(intent);
+        mIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        mContext.startActivity(mIntent);
 
         return true;
     }
