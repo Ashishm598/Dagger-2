@@ -11,7 +11,7 @@ import com.liveinpride.android.ui.home.HomeActivity;
 
 public class MyCustomWebViewClient extends WebViewClient {
 
-    private final String target_url_prefix = "liveinpride.app";
+    private final String target_url_prefix = "www.liveinpride.app";
     private Context mContext;
     private Utils utils;
     private Intent mIntent;
