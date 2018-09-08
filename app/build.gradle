@@ -16,8 +16,8 @@ android {
         applicationId "com.liveinpride.android"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 7
-        versionName "1.0.6"
+        versionCode 8
+        versionName "1.0.7"
         manifestPlaceholders = [onesignal_app_id               : 'd7b5275a-1330-4380-9b17-79d1d5d3d0a0',
                                 // Project number pulled from dashboard, local value is ignored.
                                 onesignal_google_project_number: '61075247749']

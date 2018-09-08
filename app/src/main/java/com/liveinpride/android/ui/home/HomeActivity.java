@@ -55,6 +55,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     @BindView(R.id.swipeToRefresh)
     SwipeRefreshLayout swipeToRefresh;
 
+    String userAgent = "Mozilla/5.0 (Linux; Android 4.4.2;) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.99 Mobile Safari/537.36";
 
     Unbinder unbinder;
 
@@ -146,6 +147,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     @Override
     public void setWebViewClient() {
         webView.setWebViewClient(webViewClient);
+        webView.getSettings().setUserAgentString(userAgent);
     }
 
     @Override
