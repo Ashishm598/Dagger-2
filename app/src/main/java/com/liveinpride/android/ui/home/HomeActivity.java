@@ -79,13 +79,10 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         // Set WebView Client
         setWebViewClient();
 
-
         //Load WebView
         presenter.loadWebView();
 
-
         swipeToRefresh.setOnRefreshListener(mOnRefreshListener);
-
 
     }
 
@@ -175,27 +172,6 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         }
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
     @Override
     protected void onDestroy() {

@@ -29,12 +29,7 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 
 
-/**
- * Created by user on 01-08-2017.
- */
-
 public class IntroSliderActivity extends AppCompatActivity implements IntroSliderView {
-
 
     @Inject
     IntroSliderPresenter presenter;
@@ -99,26 +94,6 @@ public class IntroSliderActivity extends AppCompatActivity implements IntroSlide
 
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 
     @Override
     protected void onDestroy() {
